@@ -330,8 +330,8 @@ Opens at **http://localhost:8501**
 | Anvita Agarwal | PES2UG23CS068 | B |
 | Asmi Vishal Kapadnis | PES2UG23CS100 | B |
 
-**PES University, Bengaluru**
-Topics in Deep Learning — Review 1
+**PES University EC Campus, Bengaluru**
+Topics in Deep Learning Mini Project
 
 ---
 
