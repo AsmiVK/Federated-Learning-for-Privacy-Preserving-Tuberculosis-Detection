@@ -352,6 +352,17 @@ Topics in Deep Learning Mini Project
 
 ---
 
+## 🙏 Acknowledgements
+
+- **TBX11K Dataset** — Liu et al., CVPR 2020. Available on [Kaggle](https://www.kaggle.com/datasets/usmanshams/tbx-11). We thank the dataset creators for making this large-scale TB benchmark publicly available.
+- **Shenzhen Hospital Dataset** — Jaeger et al., 2014. Available on [Kaggle](https://www.kaggle.com/datasets/raddar/tuberculosis-chest-xrays-shenzhen). Originally from the NIH Clinical Center.
+- **Flower Framework** — Beutel et al., 2020. [flower.ai](https://flower.ai) — for the federated learning simulation infrastructure.
+- **PES University** — Topics in Deep Learning course, for the opportunity to work on this project.
+
+---
+
+---
+
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
