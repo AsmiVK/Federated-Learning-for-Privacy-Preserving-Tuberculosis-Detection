@@ -1,0 +1,80 @@
+# ── Model ────────────────────────────────────────────────────
+model:
+  name: resnet18
+  num_classes: 3
+  pretrained: true
+  frozen_layers: [layer1, layer2]          # ImageNet features — frozen
+  trainable_layers: [layer3, layer4, fc]   # TB-specific — fine-tuned
+  input_size: 224
+
+# ── Classes ──────────────────────────────────────────────────
+classes:
+  - Healthy
+  - Active TB
+  - Latent TB
+
+# ── Data ─────────────────────────────────────────────────────
+data:
+  tbx11k_path: data/raw/TBX11K
+  shenzhen_path: data/raw/Shenzhen
+  splits_dir: data/splits
+  processed_dir: data/processed
+  image_size: 224
+  # ImageNet normalization stats
+  mean: [0.485, 0.456, 0.406]
+  std:  [0.229, 0.224, 0.225]
+
+# ── Federated Setup ──────────────────────────────────────────
+federated:
+  num_clients: 3
+  num_rounds: 25
+  fraction_fit: 1.0          # 100% client participation
+  min_fit_clients: 3
+  min_available_clients: 3
+
+  # Non-IID node distribution
+  nodes:
+    india:
+      name: "Node 1 — India (High TB)"
+      fraction: 0.40
+      class_distribution: {Healthy: 0.50, ActiveTB: 0.40, LatentTB: 0.10}
+    south_africa:
+      name: "Node 2 — South Africa (Very High TB)"
+      fraction: 0.40
+      class_distribution: {Healthy: 0.40, ActiveTB: 0.50, LatentTB: 0.10}
+    eastern_europe:
+      name: "Node 3 — Eastern Europe (MDR-TB)"
+      fraction: 0.20
+      class_distribution: {Healthy: 0.35, ActiveTB: 0.55, LatentTB: 0.10}
+      use_shenzhen: true       # domain shift dataset included here
+
+# ── Local Training (per round, per client) ───────────────────
+training:
+  local_epochs: 5
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: adam
+  weight_decay: 0.0001
+  scheduler: cosine
+
+# ── FedProx ──────────────────────────────────────────────────
+fedprox:
+  mu: 0.01                   # proximal term coefficient
+
+# ── Augmentation ─────────────────────────────────────────────
+augmentation:
+  horizontal_flip: true
+  rotation_degrees: 10
+  brightness: 0.2
+  contrast: 0.2
+
+# ── Paths ────────────────────────────────────────────────────
+paths:
+  checkpoints: checkpoints/
+  runs: runs/
+  results: runs/results.json
+
+# ── Evaluation ───────────────────────────────────────────────
+evaluation:
+  metrics: [accuracy, f1_weighted, auc_roc, cohen_kappa, sensitivity, specificity]
+  primary_metric: f1_weighted
